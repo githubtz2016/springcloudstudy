@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.dao.PatientDao">
+	<insert id="register" parameterType="com.entity.Patient">
+		insert into patient(userName,name,password,age,sex,address,phone) values
+		(#{userName},#{name},#{password},#{age},#{sex},#{address},#{phone})
+	</insert>
+	
+	<select id="findByPatientUser"  parameterType="string"  resultType="com.entity.Patient">
+		select * from patient where userName=#{userName}
+	</select>
+
+	<select id="findByName"  parameterType="string"  resultType="com.entity.Patient">
+		select * from patient where name=#{name}
+	</select>
+	
+	<select id="findName"  parameterType="int"  resultType="com.entity.Patient">
+		select * from patient where pid=#{pid}
+	</select>
+</mapper>

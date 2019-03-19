@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>操作页面</title>
+        <link type="text/css" rel="stylesheet" media="all" href="styles/operation.css" />
+        <script type="text/javascript"  src="scripts/jquery.min.js"></script>
+        <script type="text/javascript"  src="scripts/cookie_util.js"></script>
+        <script type="text/javascript"  src="scripts/base.js"></script>
+        <script type="text/javascript"  src="scripts/doctor.js"></script>
+        <script type="text/javascript">
+        //从Cookie获取ID
+        var user=getCookie("user");
+        if(user==null){
+			window.location.href="login.html";
+          }else{
+        	$(function(){
+        	  	//通过id查询请求返回用户的名字
+            	$.ajax({
+					url:base_url+"/doctor/findName.do",
+					type:"post",	
+					data:{"did":user},
+					dateType:"json",
+					success:function(result){
+						var name=result.data;
+						$("#h2").html("尊敬的"+name+"医生,您好！");
+					},
+					error:function(){
+						alert("名字查询失败");
+					}
+                });
+				//查询预约患者
+    			$("#findPatient").click(findReserve);
+    			//保存创建的病历	
+				$("#new").on("click","#saveMR",saveAddMR);	
+				//保存修改的病历	
+				$("#new").on("click","#saveupdMR",saveUpdateMR);	
+			
+        	});
+          }    	
+			
+        </script>
+	</head>
+	<body>
+		<div id="logo">
+			<img src="images/logo.jpg"/>
+			<h1>医院信息管理系统</h1>
+			<h2 id="h2"></h2>
+			<a href="login.html" >[退出]</a>
+		</div>
+		<div id="menu">
+			<p id="menuchoose">菜单选择</p>
+			<ul id="menu_list" class="contacts-list">
+				<li>
+					<input  class="btn"  type="button"   id="findPatient"  value="查看预约患者" />
+				</li>
+			</ul>
+		</div>
+		<div id="function">
+			<table id="data">
+				<thead id="th">
+				
+				</thead>
+				<tbody id="tb">
+				
+				</tbody>
+			</table>
+			<form>
+			<table id="new">
+				
+			</table>
+			</form>
+		</div>
+	</body>
+</html>	

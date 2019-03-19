@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.dao.MedicalRecordDao">
+	<insert id="creatMR"  parameterType="com.entity.MedicalRecord" >
+		insert into medicalrecord(did,description,diagnose,pname,prescribe,sDate) values
+		 (#{did},#{description},#{diagnose},#{pname},#{prescribe},now())
+	</insert>
+	
+	<select id="findMRBydid"  parameterType="string"  resultType="com.entity.MedicalRecord">
+		select * from medicalrecord where  did=#{did}
+	</select>
+	
+	<update id="updateMR"  parameterType="com.entity.MedicalRecord">
+		update medicalrecord
+		<set>
+			<if test="description!=null">
+			description=#{description},
+			</if>
+			<if test="diagnose!=null">
+			diagnose=#{diagnose},
+			</if>
+			<if test="prescribe!=null">
+			prescribe=#{prescribe},
+			</if>
+			sDate=now()
+		</set>
+		where rid=#{rid}
+	</update>
+	
+</mapper>
